@@ -14,7 +14,9 @@ module type PQUEUE = sig
 end
 
 (* The implementation is based on 4.14 and 7.13 *)
-(* NOTE: again, as in TableFUN, it is necessary to un-abstract the type of the element, which, in this case, is Order.t *)
+(* NOTE: again, as in TableFUN, it is necessary to un-abstract the type of the element, which, in this case, is Order.t.
+    By the way, it's section 7.14 that discusses the syntax/concept similar to "with type", and in ML it's called "sharing constraints"
+*)
 module PQueueFUN (Order : Order.ORDER) (ArrayOps : Array_sig.ARRAYOPS) : PQUEUE with type Order.t = Order.t = struct
   module Order = Order
 
@@ -89,3 +91,37 @@ module PQueueFUN (Order : Order.ORDER) (ArrayOps : Array_sig.ARRAYOPS) : PQUEUE 
 end
 
 module PQueueInt = PQueueFUN (Order.IntOrder) (Array_ops.ArrayOps)
+
+(* 7.14   Sharing contraints *)
+(* The original SML code looks like this:
+  functor SharFUN(structure PQueue  : PQUEUE
+                  and       Table   : TABLE
+            sharing type PQueue.Order.T = Table.key) =
+    struct
+    fun lookhead(tab, pq) = Table.lookup(tab, PQueue.hd pq);
+    end;
+*)
+
+module SharFUN (PQueue : PQUEUE) (Table : Order.TABLE with type key = PQueue.Order.t) = struct
+  let lookhead tab pq = Table.lookup tab (PQueue.head pq)
+end
+
+module type IN = sig
+  module PQueue : PQUEUE
+
+  type problem
+
+  val goals : problem -> PQueue.t
+end
+
+module type OUT = sig
+  module PQueue : PQUEUE
+
+  type solution
+
+  val solve : PQueue.t -> solution
+end
+
+module MainFUN (In : IN) (Out : OUT with type PQueue.t = In.PQueue.t) = struct
+  let tackle p = Out.solve (In.goals p)
+end

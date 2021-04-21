@@ -1,3 +1,5 @@
+module SharingModule = Pqueue.SharFUN (Pqueue.PQueueInt) (Order.IntTable)
+
 let () =
   (* Unlike SML, OCaml does not allow identifiers as names of user-defined infix operators.
       Conversely, it looks like SML does not allow symbols as infix operators!
