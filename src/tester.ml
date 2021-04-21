@@ -153,7 +153,15 @@ let () =
       |> enq 4
       |> enq 2
       |> enq 6
+      |> enq 1
+      |> enq 5
+      |> enq 8
+      |> enq 5
     in
-    ignore pqueue;
+    let rec deq_all pq l =
+      if is_empty pq then List.rev l
+      else deq_all (deq pq) ((head pq) :: l)
+    in
+    Printf.printf "Dequeued: %s\n" (String.concat ", " (List.map (fun el -> "'" ^ (string_of_int el) ^ "'") (deq_all pqueue [])));
   in
   ()

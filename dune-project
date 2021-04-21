@@ -12,7 +12,7 @@
 (maintainers "Tatiana Racheva")
 
 (package
- (name paulson-1)
+ (name paulson-ocaml)
  (synopsis "Paulson's /ML for the Working Programmer/")
  (description "Various bits and pieces that I felt like trying")
  (depends
