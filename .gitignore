@@ -1,3 +1,7 @@
+# General
+.DS_Store
+
+# OCaml-related files
 *.annot
 *.cmo
 *.cma

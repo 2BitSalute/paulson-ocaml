@@ -1,0 +1,4 @@
+(executable
+ (name tester)
+ (libraries core)
+ (preprocess (pps ppx_deriving.show)))
