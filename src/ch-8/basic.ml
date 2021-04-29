@@ -27,6 +27,8 @@ let rec mem element = function
   | [] -> false
   | head :: rest -> if head = element then true else mem element rest
 
+let (/?) = mem
+
 let newmem element l = if mem element l then l else element :: l
 
 let rec lookup ~key = function
