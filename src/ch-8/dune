@@ -1,0 +1,4 @@
+(executable
+ (name parser)
+ (libraries core)
+ (preprocess (pps ppx_deriving.show)))
