@@ -7,7 +7,7 @@ type light = Lumens of float
 let show_light = function Lumens lumens -> "LIGHT = " ^ (string_of_float lumens) ^ "lumens!"
 
 let lamp lumens_per_watt = function
-  Watts watts ->
+    Watts watts ->
     Lumens (watts *. lumens_per_watt)
 
 let tungsten_incandescent_lamp = lamp 12.5
